@@ -1042,10 +1042,8 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
         '<tasklist tasks="children"/>' + 
       '</div>',
       compile: function(element) {
-            // Use the compile function from the RecursionHelper,
-            // And return the linking function(s) which it returns
-            return RecursionHelper.compile(element);
-        }
+        return RecursionHelper.compile(element);
+      }
   }
 })
 .directive('tasklist', function(RecursionHelper) {
@@ -1062,9 +1060,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
             '</li>' +
         '</ul>',
       compile: function(element) {
-          // Use the compile function from the RecursionHelper,
-          // And return the linking function(s) which it returns
-          return RecursionHelper.compile(element);
+        return RecursionHelper.compile(element);
       }
     };
 });
