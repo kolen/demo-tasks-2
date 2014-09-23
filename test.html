@@ -1018,41 +1018,26 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
         children: []
       }
     ];
-    $scope.dragControlListeners = {
+    $scope.listeners = {
       accept: function (sourceItemHandleScope, destSortableScope) {return boolean},//override to determine drag is allowed or not. default is true.
       itemMoved: function (event) {},
       orderChanged: function(event) {},
       //containment: '#board'//optional param.
     };
 }])
-.directive('task', function(RecursionHelper) {
-  return {
-    restrict: 'E',
-    scope: {
-      text: '=',
-      dragControlListeners: '='
-    },
-    template: '' +
-      '<li data-sortable-item>' +
-        '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
-        '<div>{{text}}</div>' + 
-        '<tasklist tasks="children"/>' + 
-      '</li>',
-      compile: function(element) {
-        return RecursionHelper.compile(element);
-      }
-  }
-})
 .directive('tasklist', function(RecursionHelper) {
     return {
       restrict: 'E',
       scope: {
         tasks: '=',
-        dragControlListeners: '='
+        listeners: '='
       },
       template: '' +
-        '<ul data-sortable="dragControlListeners" ng-model="tasks">' +
-              '<task text="task.text" children="task.children" dragControlListeners="dragControlListeners" data-ng-repeat="task in tasks">' + 
+        '<ul data-sortable ng-model="tasks">' +
+          '<li data-sortable-item data-ng-repeat="task in tasks">' +
+            '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
+            '{{task.text}}' +
+          '</li>' +
         '</ul>',
       compile: function(element) {
         return RecursionHelper.compile(element);
@@ -1062,6 +1047,6 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
 </script>
 
 <div data-ng-controller="Tasks">
-    <tasklist tasks="tasks" dragControlListeners="dragControlListeners"/>
+    <tasklist tasks="tasks" listeners="listeners"/>
 </div>
 </html>
