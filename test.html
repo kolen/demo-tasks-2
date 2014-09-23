@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html ng-app="tasks">
 <style type="text/css">
-    /* ng-sortable css file */
-.sortable-item,.sortable-placeholder{display:block;min-height:20px;margin:1px 2px 5px 1px;border-radius:10px}.sortable-item{border:solid 1px darkgrey;background-color:#fff}.sortable-handle{cursor:move}.sortable-placeholder{border:1px dashed darkgrey;box-sizing:border-box;background-color:#dbdbdb}.sortable-drag{position:absolute;pointer-events:none;opacity:.8;z-index:9999}.sortable-hidden{display:none!important}
+/* ng-sortable css file */
+ .sortable-item,.sortable-placeholder{display:block;min-height:20px;margin:1px 2px 5px 1px;border-radius:10px}.sortable-item{border:solid 1px darkgrey;background-color:#fff}.sortable-handle{cursor:move}.sortable-placeholder{border:1px dashed darkgrey;box-sizing:border-box;background-color:#dbdbdb}.sortable-drag{position:absolute;pointer-events:none;opacity:.8;z-index:9999}.sortable-hidden{display:none!important}
 </style>
 <style type="text/css">
-  tasklist {
-    padding: 5px;
-    background: #aaa;
-  }
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular.js"></script>
 <script type="text/javascript">
@@ -1032,15 +1029,15 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
   return {
     restrict: 'E',
     scope: {
-      task: '=',
+      text: '=',
       dragControlListeners: '='
     },
     template: '' +
-      '<div class="task">' +
+      '<li data-sortable-item>' +
         '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
         '<div>{{text}}</div>' + 
         '<tasklist tasks="children"/>' + 
-      '</div>',
+      '</li>',
       compile: function(element) {
         return RecursionHelper.compile(element);
       }
@@ -1054,10 +1051,8 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
         dragControlListeners: '='
       },
       template: '' +
-        '<ul data-sortable="dragControlListeners" ng-model="tasks">' + 
-            '<li data-ng-repeat="task in tasks" data-sortable-item>' + 
-              '<task text="task.text" children="task.children" dragControlListeners="dragControlListeners">' + 
-            '</li>' +
+        '<ul data-sortable="dragControlListeners" ng-model="tasks">' +
+              '<task text="task.text" children="task.children" dragControlListeners="dragControlListeners" data-ng-repeat="task in tasks">' + 
         '</ul>',
       compile: function(element) {
         return RecursionHelper.compile(element);
