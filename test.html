@@ -1023,18 +1023,18 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
         children: []
       }
     ];
-    $scope.$watch('tasks', function(newValue, oldValue) {
-      console.log(newValue, oldValue);
-    }, true);
+    // $scope.$watch('tasks', function(newValue, oldValue) {
+    //   console.log(newValue, oldValue);
+    // }, true);
     $scope.listeners = {
       accept: function (sourceItemHandleScope, destSortableScope) {return boolean},//override to determine drag is allowed or not. default is true.
       itemMoved: function (event) {},
       orderChanged: function(event) {},
       //containment: '#board'//optional param.
     };
-    $scope.test = {
-      f1: function() {
-        console.log("Test");
+    $scope.changeListeners = {
+      textChanged: function(task) {
+        console.log("Test", task);
       }
     };
 }])
@@ -1043,14 +1043,14 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
       restrict: 'E',
       scope: {
         tasks: '=',
-        change: '='
+        listeners: '='
       },
       template: '' +
         '<ul data-sortable ng-model="tasks">' +
           '<li data-sortable-item data-ng-repeat="task in tasks">' +
             '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
-            '<input data-ng-model="task.text" data-ng-change="change.f1()" />' +
-            '<tasklist tasks="task.children" change="change">' +
+            '<input data-ng-model="task.text" data-ng-change="listeners.textChanged(task)" />' +
+            '<tasklist tasks="task.children" listeners="listeners" />' +
           '</li>' +
         '</ul>',
       compile: function(element) {
@@ -1061,6 +1061,6 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
 </script>
 
 <div data-ng-controller="Tasks">
-    <tasklist tasks="tasks" change="test"/>
+    <tasklist tasks="tasks" listeners="changeListeners"/>
 </div>
 </html>
