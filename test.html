@@ -7,7 +7,8 @@
 <style type="text/css">
 tasklist ul {
   background: #aaa;
-  padding: 5px;
+  padding: 5px 1px 5px 20px;
+  margin: 5px;
   border: 1px solid #000;
 }
 </style>
@@ -1022,11 +1023,19 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
         children: []
       }
     ];
+    $scope.$watch('tasks', function(newValue, oldValue) {
+      console.log(newValue, oldValue);
+    }, true);
     $scope.listeners = {
       accept: function (sourceItemHandleScope, destSortableScope) {return boolean},//override to determine drag is allowed or not. default is true.
       itemMoved: function (event) {},
       orderChanged: function(event) {},
       //containment: '#board'//optional param.
+    };
+    $scope.test = {
+      f1: function() {
+        console.log("Test");
+      }
     };
 }])
 .directive('tasklist', ['RecursionHelper', function(RecursionHelper) {
@@ -1034,14 +1043,14 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
       restrict: 'E',
       scope: {
         tasks: '=',
-        listeners: '='
+        change: '='
       },
       template: '' +
         '<ul data-sortable ng-model="tasks">' +
           '<li data-sortable-item data-ng-repeat="task in tasks">' +
             '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
-            '{{task.text}}' +
-            '<tasklist tasks="task.children">' +
+            '<input data-ng-model="task.text" data-ng-change="change.f1()" />' +
+            '<tasklist tasks="task.children" change="change">' +
           '</li>' +
         '</ul>',
       compile: function(element) {
@@ -1052,6 +1061,6 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
 </script>
 
 <div data-ng-controller="Tasks">
-    <tasklist tasks="tasks" listeners="listeners"/>
+    <tasklist tasks="tasks" change="test"/>
 </div>
 </html>
