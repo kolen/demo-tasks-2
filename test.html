@@ -1023,9 +1023,6 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
         children: []
       }
     ];
-    // $scope.$watch('tasks', function(newValue, oldValue) {
-    //   console.log(newValue, oldValue);
-    // }, true);
     $scope.listeners = {
       accept: function (sourceItemHandleScope, destSortableScope) {return boolean},//override to determine drag is allowed or not. default is true.
       itemMoved: function (event) {},
@@ -1035,6 +1032,14 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
     $scope.changeListeners = {
       textChanged: function(task) {
         console.log("Test", task);
+      },
+      reorder: {
+        orderChanged: function(event) {
+          console.log("Order changed ",event.source.itemScope, " -> ", event.dest.sortableScope);
+        },
+        itemMoved: function(event) {
+          console.log("Moved to subtree ",event.source.itemScope, " -> ", event.dest.sortableScope);
+        }
       }
     };
 }])
@@ -1046,7 +1051,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
         listeners: '='
       },
       template: '' +
-        '<ul data-sortable ng-model="tasks">' +
+        '<ul data-sortable="listeners.reorder" ng-model="tasks">' +
           '<li data-sortable-item data-ng-repeat="task in tasks">' +
             '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
             '<input data-ng-model="task.text" data-ng-change="listeners.textChanged(task)" />' +
