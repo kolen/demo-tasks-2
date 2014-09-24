@@ -1029,7 +1029,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
       //containment: '#board'//optional param.
     };
 }])
-.directive('tasklist', function(RecursionHelper) {
+.directive('tasklist', ['RecursionHelper', function(RecursionHelper) {
     return {
       restrict: 'E',
       scope: {
@@ -1048,7 +1048,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
         return RecursionHelper.compile(element);
       }
     };
-});
+}]);
 </script>
 
 <div data-ng-controller="Tasks">
