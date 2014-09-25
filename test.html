@@ -1051,6 +1051,10 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
           console.log("TODO: call PUT");
           storeOrder(event.dest.sortableScope.tasks);
         }
+      },
+      delete: function(task) {
+        task.deleted = true;
+        console.log("TODO: call DELETE ", task.id);
       }
     };
 }])
@@ -1064,9 +1068,11 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper'])
       },
       template: '' +
         '<ul data-sortable="listeners.reorder" ng-model="tasks">' +
-          '<li data-sortable-item data-ng-repeat="task in tasks">' +
+          '<li data-sortable-item data-ng-repeat="task in tasks" data-ng-if="!task.deleted">' +
             '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
-            '{{task.id}} <input data-ng-model="task.text" data-ng-change="listeners.textChanged(task)" />' +
+            '<span class="id">{{task.id}}</span>' +
+            '<a href="#" data-ng-click="listeners.delete(task)">delete</a>' +
+            '<input data-ng-model="task.text" data-ng-change="listeners.textChanged(task)" />' +
             '<tasklist tasks="task.children" listeners="listeners" task-id="task.id" />' +
           '</li>' +
         '</ul>',
