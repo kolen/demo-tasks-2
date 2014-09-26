@@ -14,7 +14,7 @@ def tasks(request):
     if request.method in ['GET', 'HEAD']:
         dump = json.dumps([
             {'id': t.id, 'description': t.description, 'parent': t.parent_id}
-             for t in Task.objects.all()
+             for t in Task.objects.order_by('weight', 'id').all()
              ])
         return HttpResponse(dump, content_type="application/json")
     elif request.method in ['POST']:
@@ -33,4 +33,15 @@ def task(request, id):
     task.description = data['description']
     task.parent_id = data['parent']
     task.save()
+    return HttpResponse()
+
+
+@require_http_methods(['POST'])
+def reorder(request):
+    data = json.loads(request.body)
+    for new_weight, task_id in enumerate(data):
+        task = Task.objects.get(pk=task_id)
+        task.weight = new_weight
+        task.save()
+
     return HttpResponse()

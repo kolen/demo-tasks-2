@@ -16,7 +16,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
 
     var storeOrder = function(tasks) {
       var taskIdsOrdered = tasks.map(function(task) {return task.id});
-      console.log("TODO: call POST reorder ", taskIdsOrdered);
+      $http({method: 'POST', url: window.api_urls.reorder, data: taskIdsOrdered});
     };
 
     $scope.changeListeners = {
