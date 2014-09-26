@@ -14,7 +14,7 @@ def tasks(request):
     if request.method in ['GET', 'HEAD']:
         dump = json.dumps([
             {'id': t.id, 'description': t.description, 'parent': t.parent_id}
-             for t in Task.objects.order_by('weight', 'id').all()
+             for t in Task.objects.order_by('weight', '-id').all()
              ])
         return HttpResponse(dump, content_type="application/json")
     elif request.method in ['POST']:
