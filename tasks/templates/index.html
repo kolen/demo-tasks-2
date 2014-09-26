@@ -14,6 +14,11 @@ tasklist ul {
 }
 </style>
 
+<script>
+window.api_urls = {
+  tasks: "{% url 'tasks' %}"
+}
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.2/angular.js"></script>
 <script src="{% static "tasks/js-ext/angular-recursion.js" %}"></script>
 <script src="{% static "tasks/js-ext/ng-sortable.min.js" %}"></script>
