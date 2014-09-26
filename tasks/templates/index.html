@@ -1,18 +1,24 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html ng-app="tasks">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tasks</title>
+
 <style type="text/css">
 /* ng-sortable css file */
  .sortable-item,.sortable-placeholder{display:block;min-height:20px;margin:1px 2px 5px 1px;border-radius:10px}.sortable-item{border:solid 1px darkgrey;background-color:#fff}.sortable-handle{cursor:move}.sortable-placeholder{border:1px dashed darkgrey;box-sizing:border-box;background-color:#dbdbdb}.sortable-drag{position:absolute;pointer-events:none;opacity:.8;z-index:9999}.sortable-hidden{display:none!important}
 </style>
 <style type="text/css">
-tasklist ul {
-  background: #aaa;
-  padding: 5px 1px 5px 20px;
-  margin: 5px;
-  border: 1px solid #000;
+.sortable-placeholder {
+  margin-right: -15px;
+  margin-left: -15px;
+  float: left;
 }
 </style>
+<link href="{% static "tasks/css-ext/bootstrap.min.css" %}" rel="stylesheet">
 
 <script>
 window.api_urls = {
@@ -28,8 +34,11 @@ window.api_urls = {
 <script src="{% static "tasks/js-ext/ng-sortable.min.js" %}"></script>
 <script src="{% static "tasks/js/tasks.js" %}"></script>
 
-<div data-ng-controller="Tasks">
-  <a href="#" data-ng-click="addNewTask()">Add new task</a>
+<div data-ng-controller="Tasks" class="container">
+  <div class="row">
+    <button type="button" class="btn btn-default" data-ng-click="addNewTask()">Add new task</button>
+  </div>
+
   <tasklist tasks="tasks" listeners="changeListeners"/>
 </div>
 </html>
