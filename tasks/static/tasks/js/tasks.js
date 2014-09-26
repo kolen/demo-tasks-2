@@ -40,7 +40,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
       },
       delete: function(task) {
         task.deleted = true;
-        console.log("TODO: call DELETE ", task.id);
+        $http({method: 'DELETE', url: window.api_urls.task + task.id});
       }
     };
 

@@ -26,14 +26,17 @@ def tasks(request):
         return HttpResponse('')
 
 
-@require_http_methods(['PUT'])
+@require_http_methods(['PUT', 'DELETE'])
 def task(request, id):
-    task = Task.objects.get(pk=id)
-    data = json.loads(request.body)
-    task.description = data['description']
-    task.parent_id = data['parent']
-    task.save()
-    return HttpResponse()
+    if request.method == 'PUT':
+        task = Task.objects.get(pk=id)
+        data = json.loads(request.body)
+        task.description = data['description']
+        task.parent_id = data['parent']
+        task.save()
+        return HttpResponse()
+    elif request.method == 'DELETE':
+        task = Task.objects.filter(pk=id).delete()
 
 
 @require_http_methods(['POST'])
