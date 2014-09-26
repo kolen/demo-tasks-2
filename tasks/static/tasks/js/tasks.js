@@ -62,10 +62,9 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
       template: '' +
         '<ul data-sortable="listeners.reorder" ng-model="tasks">' +
           '<li data-sortable-item data-ng-repeat="task in tasks" data-ng-if="!task.deleted">' +
-            '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
-            '<span class="id">{{task.id}}</span>' +
-            '<a href="#" data-ng-click="listeners.delete(task)" data-ng-if="task.children.length==0">delete</a>' +
-            '<input data-ng-model="task.description" data-ng-change="listeners.textChanged(task)" />' +
+            '<div data-sortable-item-handle> #{{task.id}}</div>' +
+            '<a href="#" data-ng-click="listeners.delete(task)" data-ng-if="task.children.length==0" class="delete">delete</a>' +
+            '<textarea data-ng-model="task.description" data-ng-change="listeners.textChanged(task)" class="task-text"></textarea>' +
             '<tasklist tasks="task.children" listeners="listeners" task-id="task.id" />' +
           '</li>' +
         '</ul>',

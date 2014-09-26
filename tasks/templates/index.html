@@ -2,16 +2,61 @@
 <!DOCTYPE html>
 <html ng-app="tasks">
 <style type="text/css">
-/* ng-sortable css file */
- .sortable-item,.sortable-placeholder{display:block;min-height:20px;margin:1px 2px 5px 1px;border-radius:10px}.sortable-item{border:solid 1px darkgrey;background-color:#fff}.sortable-handle{cursor:move}.sortable-placeholder{border:1px dashed darkgrey;box-sizing:border-box;background-color:#dbdbdb}.sortable-drag{position:absolute;pointer-events:none;opacity:.8;z-index:9999}.sortable-hidden{display:none!important}
-</style>
-<style type="text/css">
+body {
+  font-family: sans-serif;
+}
+
 tasklist ul {
-  background: #aaa;
+  background: #ddd;
   padding: 5px 1px 5px 20px;
   margin: 5px;
-  border: 1px solid #000;
+  min-height: 16px;
 }
+.sortable-item,.sortable-placeholder{
+  display:block;min-height:20px;
+  margin:1px 2px 5px 1px;
+}
+.sortable-item{
+  background-color:#fff;
+  padding: 0 10px 10px 10px;
+}
+.sortable-handle{
+  cursor: move;
+  padding: 6px;
+  float: left;
+  width: 60px;
+}
+.sortable-placeholder{
+  border:1px dashed darkgrey;
+  box-sizing:border-box;
+  background-color:#dbdbdb
+}
+.sortable-drag{
+  position:absolute;
+  pointer-events:none;
+  opacity:.8;
+  z-index:9999
+}
+.sortable-hidden{
+  display:none!important
+}
+
+.task-text {
+  width: 100%;
+  border: 0;
+  box-sizing: border-box;
+  padding: 5px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+}
+
+.delete {
+  padding: 6px;
+  display: block;
+  float: left;
+  text-decoration: none;
+}
+
 </style>
 
 <script>
