@@ -11,12 +11,12 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
     reloadAll();
 
     var save = function(task) {
-      $http({method: 'PUT', url: window.api_urls.task + task.id, data: task})
+      return $http({method: 'PUT', url: window.api_urls.task + task.id, data: task})
     };
 
     var storeOrder = function(tasks) {
       var taskIdsOrdered = tasks.map(function(task) {return task.id});
-      $http({method: 'POST', url: window.api_urls.reorder, data: taskIdsOrdered});
+      return $http({method: 'POST', url: window.api_urls.reorder, data: taskIdsOrdered});
     };
 
     $scope.changeListeners = {
@@ -33,8 +33,9 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
             parentId = null;
           }
           event.source.itemScope.task.parent = parentId;
-          save(event.source.itemScope.task);
-          storeOrder(event.dest.sortableScope.tasks);
+          save(event.source.itemScope.task).then(function() {
+            storeOrder(event.dest.sortableScope.tasks);
+          });
         }
       },
       delete: function(task) {
