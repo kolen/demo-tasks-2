@@ -2,10 +2,13 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
 .controller('Tasks', ['$scope', '$http', 'treeify', function($scope, $http, treeify) {
     $scope.tasks = [];
 
-    $http({method: 'GET', url: window.api_urls.tasks})
-    .success(function(data) {
-      $scope.tasks = treeify(data);
-    });
+    var reloadAll = function() {
+      $http({method: 'GET', url: window.api_urls.tasks})
+      .success(function(data) {
+        $scope.tasks = treeify(data);
+      });
+    };
+    reloadAll();
 
     var storeOrder = function(tasks) {
       var taskIdsOrdered = tasks.map(function(task) {return task.id});
@@ -36,6 +39,13 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
         console.log("TODO: call DELETE ", task.id);
       }
     };
+
+    $scope.addNewTask = function() {
+      $http({method: 'POST', url: window.api_urls.tasks, data: {description: '', parent: null}})
+      .success(function() {
+        reloadAll();
+      });
+    }
 }])
 .directive('tasklist', ['RecursionHelper', function(RecursionHelper) {
     return {

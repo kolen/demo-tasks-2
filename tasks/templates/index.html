@@ -27,6 +27,7 @@ window.api_urls = {
 <script src="{% static "tasks/js/tasks.js" %}"></script>
 
 <div data-ng-controller="Tasks">
-    <tasklist tasks="tasks" listeners="changeListeners"/>
+  <a href="#" data-ng-click="addNewTask()">Add new task</a>
+  <tasklist tasks="tasks" listeners="changeListeners"/>
 </div>
 </html>
