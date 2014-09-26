@@ -2,6 +2,7 @@ from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from models import Task
 from django.views.decorators.http import require_safe
+import json
 
 
 def home(request):
@@ -10,8 +11,8 @@ def home(request):
 
 @require_safe
 def tasks(request):
-	json = json.dumps(Task.objects.all())
-	return HttpResponse(json, content_type="application/json")
+	dump = json.dumps([{'id': t.id, 'text': t.description, 'parent': t.parent_id} for t in Task.objects.all()])
+	return HttpResponse(dump, content_type="application/json")
 
 
 def task_put(request):
