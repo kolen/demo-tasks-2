@@ -27,5 +27,10 @@ def tasks(request):
 
 
 @require_http_methods(['PUT'])
-def task_put(request, id):
-    pass
+def task(request, id):
+    task = Task.objects.get(pk=id)
+    data = json.loads(request.body)
+    task.description = data['description']
+    task.parent_id = data['parent']
+    task.save()
+    return HttpResponse()

@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'tasks.views.home'),
     url(r'^api/task$', 'tasks.views.tasks', name='tasks'),
+    url(r'^api/task/(?P<id>\d+)?$', 'tasks.views.task', name='task')
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

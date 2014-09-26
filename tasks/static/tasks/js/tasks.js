@@ -10,6 +10,10 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
     };
     reloadAll();
 
+    var save = function(task) {
+      $http({method: 'PUT', url: window.api_urls.task + task.id, data: task})
+    };
+
     var storeOrder = function(tasks) {
       var taskIdsOrdered = tasks.map(function(task) {return task.id});
       console.log("TODO: call POST reorder ", taskIdsOrdered);
@@ -17,7 +21,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
 
     $scope.changeListeners = {
       textChanged: function(task) {
-        console.log("Test", task);
+        save(task);
       },
       reorder: {
         orderChanged: function(event) {
@@ -29,8 +33,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
             parentId = null;
           }
           event.source.itemScope.task.parent = parentId;
-          console.log("Changing parent to ", parentId);
-          console.log("TODO: call PUT");
+          save(event.source.itemScope.task);
           storeOrder(event.dest.sortableScope.tasks);
         }
       },
@@ -61,7 +64,7 @@ angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
             '<div data-sortable-item-handle style="width: 15px; height: 25px; background: #eee;"></div>' +
             '<span class="id">{{task.id}}</span>' +
             '<a href="#" data-ng-click="listeners.delete(task)">delete</a>' +
-            '<input data-ng-model="task.text" data-ng-change="listeners.textChanged(task)" />' +
+            '<input data-ng-model="task.description" data-ng-change="listeners.textChanged(task)" />' +
             '<tasklist tasks="task.children" listeners="listeners" task-id="task.id" />' +
           '</li>' +
         '</ul>',
