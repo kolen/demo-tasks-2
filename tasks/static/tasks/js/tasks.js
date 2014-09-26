@@ -1,25 +1,9 @@
 angular.module('tasks', ['ui.sortable', 'RecursionHelper', 'ngResource'])
 .controller('Tasks', ['$scope', '$http', 'treeify', function($scope, $http, treeify) {
-    // $scope.tasks = [
-    //   {
-    //     id: 3,
-    //     parent: null,
-    //     text: 'Lol',
-    //     children: []
-    //   },
-    //   {
-    //     id: 5,
-    //     parent: null,
-    //     text: 'Foo',
-    //     children: []
-    //   }
-    // ];
     $scope.tasks = [];
 
     $http({method: 'GET', url: window.api_urls.tasks})
     .success(function(data) {
-      //console.log(data);
-      //console.log(treeify(data));
       $scope.tasks = treeify(data);
     });
 
